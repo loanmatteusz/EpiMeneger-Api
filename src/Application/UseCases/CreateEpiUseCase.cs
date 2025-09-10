@@ -1,7 +1,6 @@
 using EpiManager.Domain.Entities;
 using EpiManager.Application.Interfaces;
 
-
 namespace EpiManager.Application.UseCases
 {
     public class CreateEpiUseCase
