@@ -1,5 +1,6 @@
 using EpiManager.Domain.Entities;
 using EpiManager.Application.Interfaces;
+using EpiManager.Application.Contracts;
 
 namespace EpiManager.Application.UseCases
 {
@@ -14,16 +15,16 @@ namespace EpiManager.Application.UseCases
             _guidGenerator = guidGenerator;
         }
 
-        public async Task<Epi> ExecuteAsync(string name, int ca, DateTime expiration, string category, string? description = null)
+        public async Task<Epi> ExecuteAsync(ICreateEpiRequest request)
         {
             var epi = new Epi
             {
                 Id = _guidGenerator.Generate(),
-                Name = name,
-                CA = ca,
-                Expiration = expiration.ToUniversalTime(),
-                Category = category,
-                Description = description
+                Name = request.Name,
+                CA = request.CA,
+                Expiration = request.Expiration.ToUniversalTime(),
+                Category = request.Category,
+                Description = request.Description
             };
 
             await _repository.AddAsync(epi);

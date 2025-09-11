@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using EpiManager.Api.DTOs;
 using EpiManager.Application.UseCases;
 
 [ApiController]
@@ -16,14 +15,7 @@ public class EpisController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] EpiRequest request)
     {
-        var epi = await _createEpiUseCase.ExecuteAsync(
-            request.Name,
-            request.CA,
-            request.Expiration,
-            request.Category,
-            request.Description
-        );
-
+        var epi = await _createEpiUseCase.ExecuteAsync(request);
         return CreatedAtAction(nameof(Create), new { id = epi.Id }, epi);
     }
 }

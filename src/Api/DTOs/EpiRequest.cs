@@ -1,4 +1,20 @@
-namespace EpiManager.Api.DTOs
+using System.ComponentModel.DataAnnotations;
+using EpiManager.Application.Contracts;
+
+public class EpiRequest : ICreateEpiRequest
 {
-    public record EpiRequest(string Name, int CA, DateTime Expiration, string Category, string? Description);
+    [Required(ErrorMessage = "O nome é obrigatório.")]
+    [MinLength(3, ErrorMessage = "O nome deve ter pelo menos 3 caracteres.")]
+    public string Name { get; set; } = string.Empty;
+
+    [Range(1, int.MaxValue, ErrorMessage = "O CA deve ser maior que 0.")]
+    public int CA { get; set; }
+
+    [Required(ErrorMessage = "A data de validade é obrigatória.")]
+    public DateTime Expiration { get; set; }
+
+    [Required(ErrorMessage = "A categoria é obrigatória.")]
+    public string Category { get; set; } = null!;
+
+    public string? Description { get; set; }
 }
