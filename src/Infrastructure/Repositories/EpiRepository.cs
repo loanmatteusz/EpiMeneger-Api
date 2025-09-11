@@ -31,6 +31,21 @@ namespace EpiManager.Infrastructure.Repositories
             return await _context.Epis.ToListAsync();
         }
 
+        public async Task<Epi?> UpdateAsync(Guid id, IUpdateEpiRequest epi)
+        {
+            var existing = await _context.Epis.FindAsync(id);
+            if (existing == null) return null;
+
+            existing.Name = epi.Name;
+            existing.CA = epi.CA;
+            existing.Expiration = epi.Expiration;
+            existing.Category = epi.Category;
+            existing.Description = epi.Description;
+
+            await _context.SaveChangesAsync();
+            return existing;
+        }
+
         public async Task<Epi?> PatchAsync(Guid id, IPatchEpiRequest request)
         {
             var existing = await _context.Epis.FindAsync(id);
