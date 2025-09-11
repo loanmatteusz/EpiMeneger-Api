@@ -4,18 +4,18 @@ using EpiManager.Application.Contracts;
 
 namespace EpiManager.Application.UseCases
 {
-    public class UpdateEpiUseCase
+    public class PatchEpiUseCase
     {
         private readonly IEpiRepository _repository;
 
-        public UpdateEpiUseCase(IEpiRepository repository)
+        public PatchEpiUseCase(IEpiRepository repository)
         {
             _repository = repository;
         }
 
-        public async Task<Epi?> ExecuteAsync(Guid id, IUpdateEpiRequest request)
+        public async Task<Epi?> ExecuteAsync(Guid id, IPatchEpiRequest request)
         {
-            return await _repository.UpdateAsync(id, request);
+            return await _repository.PatchAsync(id, request);
         }
     }
 }

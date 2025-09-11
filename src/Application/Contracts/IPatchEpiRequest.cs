@@ -1,6 +1,6 @@
 namespace EpiManager.Application.Contracts
 {
-    public interface IUpdateEpiRequest
+    public interface IPatchEpiRequest
     {
         string? Name { get; }
         int? CA { get; }

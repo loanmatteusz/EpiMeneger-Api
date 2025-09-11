@@ -3,11 +3,11 @@ using System.ComponentModel.DataAnnotations;
 
 namespace EpiManager.Api.DTOs
 {
-    public record UpdateEpiRequest(
+    public record PatchEpiRequest(
         string? Name,
         [Range(1, int.MaxValue)] int? CA,
         DateTime? Expiration,
         string? Category,
         string? Description
-    ) : IUpdateEpiRequest;
+    ) : IPatchEpiRequest;
 }
