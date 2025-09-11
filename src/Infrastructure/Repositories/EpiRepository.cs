@@ -28,7 +28,7 @@ namespace EpiManager.Infrastructure.Repositories
 
         public async Task<PagedResult<Epi>> ListAsync(int page, int pageSize, string? name, int? ca, string? category)
         {
-            var query = _context.Epis.AsQueryable();
+            var query = _context.Epis.Include(e => e.Category).AsQueryable();
 
             if (!string.IsNullOrEmpty(name))
                 query = query.Where(e => EF.Functions.ILike(e.Name, $"%{name}%"));
@@ -37,7 +37,7 @@ namespace EpiManager.Infrastructure.Repositories
                 query = query.Where(e => e.CA == ca.Value);
 
             if (!string.IsNullOrEmpty(category))
-                query = query.Where(e => EF.Functions.ILike(e.Category, $"%{category}%"));
+                query = query.Where(e => EF.Functions.ILike(e.Category.Name, $"%{category}%"));
 
             var totalItems = await query.CountAsync();
             var items = await query
@@ -62,7 +62,7 @@ namespace EpiManager.Infrastructure.Repositories
             existing.Name = epi.Name;
             existing.CA = epi.CA;
             existing.Expiration = epi.Expiration;
-            existing.Category = epi.Category;
+            existing.CategoryId = epi.CategoryId;
             existing.Description = epi.Description;
 
             await _context.SaveChangesAsync();
@@ -77,7 +77,7 @@ namespace EpiManager.Infrastructure.Repositories
             if (request.Name is not null) existing.Name = request.Name;
             if (request.CA.HasValue) existing.CA = request.CA.Value;
             if (request.Expiration.HasValue) existing.Expiration = request.Expiration.Value;
-            if (request.Category is not null) existing.Category = request.Category;
+            if (request.CategoryId is not null) existing.CategoryId = request.CategoryId.Value;
             if (request.Description is not null) existing.Description = request.Description;
 
             await _context.SaveChangesAsync();

@@ -5,7 +5,7 @@ namespace EpiManager.Application.Contracts
         string Name { get; }
         int CA { get; }
         DateTime Expiration { get; }
-        string Category { get; }
+        Guid CategoryId { get; }
         string? Description { get; }
     }
 }

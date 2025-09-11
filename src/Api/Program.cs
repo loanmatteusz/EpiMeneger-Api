@@ -19,12 +19,19 @@ builder.Services.AddSwaggerGen();
 // Dependency Injection
 builder.Services.AddScoped<IGuidGenerator, GuidGeneratorService>();
 builder.Services.AddScoped<IEpiRepository, EpiRepository>();
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+
+// Epi UseCases
 builder.Services.AddScoped<CreateEpiUseCase>();
 builder.Services.AddScoped<GetEpiByIdUseCase>();
 builder.Services.AddScoped<ListEpisUseCase>();
 builder.Services.AddScoped<UpdateEpiUseCase>();
 builder.Services.AddScoped<PatchEpiUseCase>();
 builder.Services.AddScoped<DeleteEpiUseCase>();
+
+// Category UseCases
+builder.Services.AddScoped<CreateCategoryUseCase>();
+builder.Services.AddScoped<ListCategoriesUseCase>();
 
 
 var app = builder.Build();

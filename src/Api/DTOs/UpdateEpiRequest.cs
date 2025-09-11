@@ -7,7 +7,7 @@ namespace EpiManager.Api.DTOs
         string Name,
         [Range(1, int.MaxValue)] int CA,
         DateTime Expiration,
-        string Category,
+        Guid CategoryId,
         string? Description
     ) : IUpdateEpiRequest;
 }

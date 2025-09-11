@@ -6,16 +6,18 @@ namespace EpiManager.Application.UseCases
 {
     public class CreateEpiUseCase
     {
-        private readonly IEpiRepository _repository;
+        private readonly IEpiRepository _epiRepository;
+        private readonly ICategoryRepository _categoryRepository;
         private readonly IGuidGenerator _guidGenerator;
 
-        public CreateEpiUseCase(IEpiRepository repository, IGuidGenerator guidGenerator)
+        public CreateEpiUseCase(IEpiRepository epiRepository, ICategoryRepository categoryRepository, IGuidGenerator guidGenerator)
         {
-            _repository = repository;
+            _categoryRepository = categoryRepository;
+            _epiRepository = epiRepository;
             _guidGenerator = guidGenerator;
         }
 
-        public async Task<Epi> ExecuteAsync(ICreateEpiRequest request)
+        public async Task<EpiResponse> ExecuteAsync(ICreateEpiRequest request)
         {
             var epi = new Epi
             {
@@ -23,12 +25,24 @@ namespace EpiManager.Application.UseCases
                 Name = request.Name,
                 CA = request.CA,
                 Expiration = request.Expiration.ToUniversalTime(),
-                Category = request.Category,
+                CategoryId = request.CategoryId,
                 Description = request.Description
             };
 
-            await _repository.AddAsync(epi);
-            return epi;
+            await _epiRepository.AddAsync(epi);
+
+            var category = await _categoryRepository.GetByIdAsync(epi.CategoryId);
+
+            return new EpiResponse
+            {
+                Id = epi.Id,
+                Name = epi.Name,
+                CA = epi.CA,
+                Expiration = epi.Expiration,
+                CategoryId = epi.CategoryId,
+                Category = category?.Name ?? string.Empty,
+                Description = epi.Description
+            };
         }
     }
 }

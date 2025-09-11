@@ -14,7 +14,7 @@ public class CreateEpiRequest : ICreateEpiRequest
     public DateTime Expiration { get; set; }
 
     [Required(ErrorMessage = "A categoria é obrigatória.")]
-    public string Category { get; set; } = null!;
+    public Guid CategoryId { get; set; }
 
     public string? Description { get; set; }
 }
