@@ -11,5 +11,8 @@ namespace EpiManager.Application.Interfaces
         Task<Epi?> UpdateAsync(Guid id, IUpdateEpiRequest epi);
         Task<Epi?> PatchAsync(Guid id, IPatchEpiRequest epi);
         Task<bool> DeleteAsync(Guid id);
+        Task<int> CountAsync();
+        Task<Dictionary<string, int>> CountByCategoryAsync();
+        Task<int> CountExpiringSoonAsync(int days);
     }
 }

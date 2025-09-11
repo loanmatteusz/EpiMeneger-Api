@@ -92,5 +92,27 @@ namespace EpiManager.Infrastructure.Repositories
             await _context.SaveChangesAsync();
             return true;
         }
+
+        public async Task<int> CountAsync()
+        {
+            return await _context.Epis.CountAsync();
+        }
+
+        public async Task<Dictionary<string, int>> CountByCategoryAsync()
+        {
+            return await _context.Epis
+                .Include(e => e.Category)
+                .GroupBy(e => e.Category!.Name)
+                .Select(g => new { Category = g.Key, Count = g.Count() })
+                .ToDictionaryAsync(x => x.Category, x => x.Count);
+        }
+
+        public async Task<int> CountExpiringSoonAsync(int days)
+        {
+            var now = DateTime.UtcNow;
+            var targetDate = now.AddDays(days);
+            return await _context.Epis
+                .CountAsync(e => e.Expiration >= now && e.Expiration <= targetDate);
+        }
     }
 }

@@ -33,6 +33,9 @@ builder.Services.AddScoped<DeleteEpiUseCase>();
 builder.Services.AddScoped<CreateCategoryUseCase>();
 builder.Services.AddScoped<ListCategoriesUseCase>();
 
+// Metrics UseCases
+builder.Services.AddScoped<GetEpiMetricsUseCase>();
+
 
 var app = builder.Build();
 
