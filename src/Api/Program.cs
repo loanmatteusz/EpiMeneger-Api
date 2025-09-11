@@ -20,6 +20,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IGuidGenerator, GuidGeneratorService>();
 builder.Services.AddScoped<IEpiRepository, EpiRepository>();
 builder.Services.AddScoped<CreateEpiUseCase>();
+builder.Services.AddScoped<GetEpiByIdUseCase>();
 
 var app = builder.Build();
 
