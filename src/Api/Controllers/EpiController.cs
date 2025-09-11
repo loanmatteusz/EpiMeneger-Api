@@ -9,6 +9,7 @@ public class EpisController : ControllerBase
     private readonly CreateEpiUseCase _createEpiUseCase;
     private readonly GetEpiByIdUseCase _getEpiByIdUseCase;
     private readonly ListEpisUseCase _listEpisUseCase;
+    private readonly UpdateEpiUseCase _updateEpiUseCase;
     private readonly PatchEpiUseCase _patchEpiUseCase;
     private readonly DeleteEpiUseCase _deleteEpiUseCase;
 
@@ -16,6 +17,7 @@ public class EpisController : ControllerBase
         CreateEpiUseCase createEpiUseCase,
         GetEpiByIdUseCase getEpiByIdUseCase,
         ListEpisUseCase listEpisUseCase,
+        UpdateEpiUseCase updateEpiUseCase,
         PatchEpiUseCase patchEpiUseCase,
         DeleteEpiUseCase deleteEpiUseCase
     )
@@ -23,6 +25,7 @@ public class EpisController : ControllerBase
         _createEpiUseCase = createEpiUseCase;
         _getEpiByIdUseCase = getEpiByIdUseCase;
         _listEpisUseCase = listEpisUseCase;
+        _updateEpiUseCase = updateEpiUseCase;
         _patchEpiUseCase = patchEpiUseCase;
         _deleteEpiUseCase = deleteEpiUseCase;
     }
@@ -53,6 +56,14 @@ public class EpisController : ControllerBase
     {
         var result = await _listEpisUseCase.ExecuteAsync(page, pageSize, name, ca, category);
         return Ok(result);
+    }
+
+    [HttpPut("{id}")]
+    public async Task<IActionResult> Patch(Guid id, [FromBody] UpdateEpiRequest request)
+    {
+        var epi = await _updateEpiUseCase.ExecuteAsync(id, request);
+        if (epi == null) return NotFound();
+        return Ok(epi);
     }
 
     [HttpPatch("{id}")]
