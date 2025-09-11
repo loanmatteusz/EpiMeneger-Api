@@ -22,6 +22,7 @@ builder.Services.AddScoped<IEpiRepository, EpiRepository>();
 builder.Services.AddScoped<CreateEpiUseCase>();
 builder.Services.AddScoped<GetEpiByIdUseCase>();
 builder.Services.AddScoped<ListEpisUseCase>();
+builder.Services.AddScoped<DeleteEpiUseCase>();
 
 
 var app = builder.Build();

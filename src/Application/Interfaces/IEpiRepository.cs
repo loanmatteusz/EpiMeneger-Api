@@ -7,5 +7,6 @@ namespace EpiManager.Application.Interfaces
         Task AddAsync(Epi epi);
         Task<Epi?> GetByIdAsync(Guid id);
         Task<IEnumerable<Epi>> GetAllAsync();
+        Task<bool> DeleteAsync(Guid id);
     }
 }

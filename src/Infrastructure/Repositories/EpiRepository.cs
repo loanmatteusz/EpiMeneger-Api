@@ -29,5 +29,14 @@ namespace EpiManager.Infrastructure.Repositories
         {
             return await _context.Epis.ToListAsync();
         }
+
+        public async Task<bool> DeleteAsync(Guid id)
+        {
+            var epi = await _context.Epis.FindAsync(id);
+            if (epi == null) return false;
+            _context.Epis.Remove(epi);
+            await _context.SaveChangesAsync();
+            return true;
+        }
     }
 }

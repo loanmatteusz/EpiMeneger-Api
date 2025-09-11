@@ -8,16 +8,19 @@ public class EpisController : ControllerBase
     private readonly CreateEpiUseCase _createEpiUseCase;
     private readonly GetEpiByIdUseCase _getEpiByIdUseCase;
     private readonly ListEpisUseCase _listEpisUseCase;
+    private readonly DeleteEpiUseCase _deleteEpiUseCase;
 
     public EpisController(
         CreateEpiUseCase createEpiUseCase,
         GetEpiByIdUseCase getEpiByIdUseCase,
-        ListEpisUseCase listEpisUseCase
+        ListEpisUseCase listEpisUseCase,
+        DeleteEpiUseCase deleteEpiUseCase
     )
     {
         _createEpiUseCase = createEpiUseCase;
         _getEpiByIdUseCase = getEpiByIdUseCase;
         _listEpisUseCase = listEpisUseCase;
+        _deleteEpiUseCase = deleteEpiUseCase;
     }
 
     [HttpPost]
@@ -40,5 +43,13 @@ public class EpisController : ControllerBase
     {
         var epis = await _listEpisUseCase.ExecuteAsync();
         return Ok(epis);
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete(Guid id)
+    {
+        var deleted = await _deleteEpiUseCase.ExecuteAsync(id);
+        if (!deleted) return NotFound();
+        return NoContent();
     }
 }
