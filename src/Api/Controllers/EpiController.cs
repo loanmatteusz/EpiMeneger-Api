@@ -28,7 +28,7 @@ public class EpisController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create([FromBody] EpiRequest request)
+    public async Task<IActionResult> Create([FromBody] CreateEpiRequest request)
     {
         var epi = await _createEpiUseCase.ExecuteAsync(request);
         return CreatedAtAction(nameof(Create), new { id = epi.Id }, epi);
