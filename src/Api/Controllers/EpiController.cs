@@ -3,7 +3,7 @@ using EpiManager.Application.UseCases;
 using EpiManager.Api.DTOs;
 
 [ApiController]
-[Route("api/v1/epi")]
+[Route("api/v1/epis")]
 public class EpisController : ControllerBase
 {
     private readonly CreateEpiUseCase _createEpiUseCase;
