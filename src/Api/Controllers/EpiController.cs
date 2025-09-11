@@ -43,10 +43,16 @@ public class EpisController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> List()
+    public async Task<IActionResult> List(
+        [FromQuery] int page = 1,
+        [FromQuery] int pageSize = 10,
+        [FromQuery] string? name = null,
+        [FromQuery] int? ca = null,
+        [FromQuery] string? category = null
+    )
     {
-        var epis = await _listEpisUseCase.ExecuteAsync();
-        return Ok(epis);
+        var result = await _listEpisUseCase.ExecuteAsync(page, pageSize, name, ca, category);
+        return Ok(result);
     }
 
     [HttpPatch("{id}")]

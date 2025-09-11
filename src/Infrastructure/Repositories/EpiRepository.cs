@@ -26,9 +26,32 @@ namespace EpiManager.Infrastructure.Repositories
             return await _context.Epis.FindAsync(id);
         }
 
-        public async Task<IEnumerable<Epi>> GetAllAsync()
+        public async Task<PagedResult<Epi>> ListAsync(int page, int pageSize, string? name, int? ca, string? category)
         {
-            return await _context.Epis.ToListAsync();
+            var query = _context.Epis.AsQueryable();
+
+            if (!string.IsNullOrEmpty(name))
+                query = query.Where(e => EF.Functions.ILike(e.Name, $"%{name}%"));
+
+            if (ca.HasValue)
+                query = query.Where(e => e.CA == ca.Value);
+
+            if (!string.IsNullOrEmpty(category))
+                query = query.Where(e => EF.Functions.ILike(e.Category, $"%{category}%"));
+
+            var totalItems = await query.CountAsync();
+            var items = await query
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
+            return new PagedResult<Epi>
+            {
+                Data = items,
+                TotalItems = totalItems,
+                Page = page,
+                PageSize = pageSize
+            };
         }
 
         public async Task<Epi?> UpdateAsync(Guid id, IUpdateEpiRequest epi)

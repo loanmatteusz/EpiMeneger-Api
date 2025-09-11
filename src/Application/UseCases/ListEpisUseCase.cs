@@ -1,3 +1,4 @@
+using EpiManager.Application.Contracts;
 using EpiManager.Application.Interfaces;
 using EpiManager.Domain.Entities;
 
@@ -12,10 +13,15 @@ namespace EpiManager.Application.UseCases
             _repository = repository;
         }
 
-        public async Task<IEnumerable<Epi>> ExecuteAsync()
+        public async Task<PagedResult<Epi>> ExecuteAsync(
+            int page,
+            int pageSize,
+            string? name,
+            int? ca,
+            string? category
+        )
         {
-            var epis = await _repository.GetAllAsync();
-            return epis;
+            return await _repository.ListAsync(page, pageSize, name, ca, category);
         }
     }
 }
