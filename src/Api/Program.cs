@@ -21,6 +21,8 @@ builder.Services.AddScoped<IGuidGenerator, GuidGeneratorService>();
 builder.Services.AddScoped<IEpiRepository, EpiRepository>();
 builder.Services.AddScoped<CreateEpiUseCase>();
 builder.Services.AddScoped<GetEpiByIdUseCase>();
+builder.Services.AddScoped<ListEpisUseCase>();
+
 
 var app = builder.Build();
 
