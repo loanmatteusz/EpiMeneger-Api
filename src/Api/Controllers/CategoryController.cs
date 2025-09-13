@@ -8,15 +8,18 @@ public class CategoryController : ControllerBase
     private readonly CreateCategoryUseCase _createCategoryUseCase;
     // private readonly GetEpiByIdUseCase _getEpiByIdUseCase;
     private readonly ListCategoriesUseCase _listCategoriesUseCase;
+    private readonly DeleteCategoryUseCase _deleteCategoryUseCase;
 
     public CategoryController(
         CreateCategoryUseCase createCategoryUseCase,
         // GetEpiByIdUseCase getEpiByIdUseCase,
-        ListCategoriesUseCase listCategoriesUseCase
+        ListCategoriesUseCase listCategoriesUseCase,
+        DeleteCategoryUseCase deleteCategoriesUseCase
     )
     {
         _createCategoryUseCase = createCategoryUseCase;
         _listCategoriesUseCase = listCategoriesUseCase;
+        _deleteCategoryUseCase = deleteCategoriesUseCase;
     }
 
     [HttpPost]
@@ -43,5 +46,13 @@ public class CategoryController : ControllerBase
         }
         var result = await _listCategoriesUseCase.ExecuteAsync(page, pageSize, name);
         return Ok(result);
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete(Guid id)
+    {
+        var deleted = await _deleteCategoryUseCase.ExecuteAsync(id);
+        if (!deleted) return NotFound();
+        return NoContent();
     }
 }

@@ -32,6 +32,7 @@ builder.Services.AddScoped<DeleteEpiUseCase>();
 // Category UseCases
 builder.Services.AddScoped<CreateCategoryUseCase>();
 builder.Services.AddScoped<ListCategoriesUseCase>();
+builder.Services.AddScoped<DeleteCategoryUseCase>();
 
 // Metrics UseCases
 builder.Services.AddScoped<GetEpiMetricsUseCase>();
