@@ -67,7 +67,7 @@ public class EpisController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> Patch(Guid id, [FromBody] UpdateEpiRequest request)
+    public async Task<IActionResult> Update(Guid id, [FromBody] UpdateEpiRequest request)
     {
         var epi = await _updateEpiUseCase.ExecuteAsync(id, request);
         if (epi == null) return NotFound();
