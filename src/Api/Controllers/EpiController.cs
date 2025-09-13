@@ -54,6 +54,14 @@ public class EpisController : ControllerBase
         [FromQuery] string? category = null
     )
     {
+        if (page < 1)
+        {
+            page = 1;
+        }
+        if (pageSize < 1)
+        {
+            pageSize = 10;
+        }
         var result = await _listEpisUseCase.ExecuteAsync(page, pageSize, name, ca, category);
         return Ok(result);
     }

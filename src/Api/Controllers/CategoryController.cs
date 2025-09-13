@@ -26,14 +26,6 @@ public class CategoryController : ControllerBase
         return CreatedAtAction(nameof(Create), new { id = category.Id }, category);
     }
 
-    // [HttpGet("{id}")]
-    // public async Task<IActionResult> GetById(Guid id)
-    // {
-    //     var epi = await _getEpiByIdUseCase.ExecuteAsync(id);
-    //     if (epi == null) return NotFound();
-    //     return Ok(epi);
-    // }
-
     [HttpGet]
     public async Task<IActionResult> List(
         [FromQuery] int page = 1,
@@ -41,6 +33,14 @@ public class CategoryController : ControllerBase
         [FromQuery] string? name = null
     )
     {
+        if (page < 1)
+        {
+            page = 1;
+        }
+        if (pageSize < 1)
+        {
+            pageSize = 10;
+        }
         var result = await _listCategoriesUseCase.ExecuteAsync(page, pageSize, name);
         return Ok(result);
     }
